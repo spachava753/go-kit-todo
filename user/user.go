@@ -9,8 +9,8 @@ import (
 )
 
 type User struct {
-	Id,
-	Name string
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }
 
 type Service interface {

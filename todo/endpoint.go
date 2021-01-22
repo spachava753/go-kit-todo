@@ -38,10 +38,10 @@ type getTodoByIdResponse struct {
 	Err  error `json:"error,omitempty"`
 }
 
-type listTodosByUserIdRequest struct {
+type getTodosByUserIdRequest struct {
 	UserId string
 }
-type listTodosByUserIdResponse struct {
+type getTodosByUserIdResponse struct {
 	Todo *[]Todo `json:"todos,omitempty"`
 	Err  error   `json:"error,omitempty"`
 }
@@ -80,8 +80,8 @@ func makeHttpGetTodoByIdEndpoint(s Service) endpoint.Endpoint {
 
 func makeHttpListTodosByUserIdEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(listTodosByUserIdRequest)
+		req := request.(getTodosByUserIdRequest)
 		t, err := s.ListTodosByUserId(ctx, req.UserId)
-		return listTodosByUserIdResponse{&t, err}, nil
+		return getTodosByUserIdResponse{&t, err}, nil
 	}
 }
