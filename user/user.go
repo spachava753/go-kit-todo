@@ -13,7 +13,7 @@ type User struct {
 	Name string
 }
 
-type UserService interface {
+type Service interface {
 	CreateUser(ctx context.Context, name string) (User, error)
 	DeleteUser(ctx context.Context, userId string) (User, error)
 	UpdateUser(ctx context.Context, user User) (User, error)
@@ -65,6 +65,6 @@ func (s *inMemUserService) ListUsers(ctx context.Context) ([]User, error) {
 	return userList, nil
 }
 
-func NewMemUserService(entropy *ulid.MonotonicEntropy, t time.Time) UserService {
+func NewMemUserService(entropy *ulid.MonotonicEntropy, t time.Time) Service {
 	return &inMemUserService{entropy, t, sync.Map{}}
 }

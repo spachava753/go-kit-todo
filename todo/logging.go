@@ -8,7 +8,7 @@ import (
 
 type basicLoggingService struct {
 	logger log.Logger
-	TodoService
+	Service
 }
 
 func (s *basicLoggingService) CreateTodo(ctx context.Context, text string, userId string) (t Todo, err error) {
@@ -46,7 +46,7 @@ func (s *basicLoggingService) ListTodosByUserId(ctx context.Context, userId stri
 	return s.TodoService.ListTodosByUserId(ctx, userId)
 }
 
-func NewBasicLoggingService(logger log.Logger, s TodoService) TodoService {
+func NewBasicLoggingService(logger log.Logger, s Service) Service {
 	return &basicLoggingService{
 		logger:      logger,
 		TodoService: s,

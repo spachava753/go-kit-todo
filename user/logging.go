@@ -8,7 +8,7 @@ import (
 
 type basicLoggingService struct {
 	logger log.Logger
-	UserService
+	Service
 }
 
 func (s *basicLoggingService) CreateUser(ctx context.Context, name string) (u User, err error) {
@@ -46,7 +46,7 @@ func (s *basicLoggingService) ListUsers(ctx context.Context) (us []User, err err
 	return s.UserService.ListUsers(ctx)
 }
 
-func NewBasicLoggingService(logger log.Logger, s UserService) UserService {
+func NewBasicLoggingService(logger log.Logger, s Service) Service {
 	return &basicLoggingService{
 		logger:      logger,
 		UserService: s,

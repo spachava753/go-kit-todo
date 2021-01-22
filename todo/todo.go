@@ -16,7 +16,7 @@ type Todo struct {
 	UserId string
 }
 
-type TodoService interface {
+type Service interface {
 	CreateTodo(ctx context.Context, text string, userId string) (Todo, error)
 	DeleteTodo(ctx context.Context, todoId string) (Todo, error)
 	UpdateTodo(ctx context.Context, todo Todo) (Todo, error)
@@ -74,6 +74,6 @@ func (s *inMemTodoService) ListTodosByUserId(ctx context.Context, userId string)
 	return todoList, nil
 }
 
-func NewMemTodoService(entropy *ulid.MonotonicEntropy, t time.Time) TodoService {
+func NewMemTodoService(entropy *ulid.MonotonicEntropy, t time.Time) Service {
 	return &inMemTodoService{entropy, t, sync.Map{}}
 }

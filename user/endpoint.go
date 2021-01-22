@@ -43,7 +43,7 @@ type listUsersResponse struct {
 	Err  error   `json:"error,omitempty"`
 }
 
-func makeHttpCreateUserEndpoint(s UserService) endpoint.Endpoint {
+func makeHttpCreateUserEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(createUserRequest)
 		user, err := s.CreateUser(ctx, req.Name)
@@ -51,7 +51,7 @@ func makeHttpCreateUserEndpoint(s UserService) endpoint.Endpoint {
 	}
 }
 
-func makeHttpDeleteUserEndpoint(s UserService) endpoint.Endpoint {
+func makeHttpDeleteUserEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(deleteUserRequest)
 		user, err := s.DeleteUser(ctx, req.UserId)
@@ -59,7 +59,7 @@ func makeHttpDeleteUserEndpoint(s UserService) endpoint.Endpoint {
 	}
 }
 
-func makeHttpUpdateUserEndpoint(s UserService) endpoint.Endpoint {
+func makeHttpUpdateUserEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(updateUserRequest)
 		user, err := s.UpdateUser(ctx, req.User)
@@ -67,7 +67,7 @@ func makeHttpUpdateUserEndpoint(s UserService) endpoint.Endpoint {
 	}
 }
 
-func makeHttpGetUserByIdEndpoint(s UserService) endpoint.Endpoint {
+func makeHttpGetUserByIdEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(getUserByIdRequest)
 		user, err := s.GetUserById(ctx, req.UserId)
@@ -75,7 +75,7 @@ func makeHttpGetUserByIdEndpoint(s UserService) endpoint.Endpoint {
 	}
 }
 
-func makeHttpListUsersEndpoint(s UserService) endpoint.Endpoint {
+func makeHttpListUsersEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		user, err := s.ListUsers(ctx)
 		return listUsersResponse{&user, err}, nil

@@ -46,7 +46,7 @@ type listTodosByUserIdResponse struct {
 	Err  error   `json:"error,omitempty"`
 }
 
-func makeHttpCreateTodoEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpCreateTodoEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(createTodoRequest)
 		t, err := s.CreateTodo(ctx, req.Text, req.UserId)
@@ -54,7 +54,7 @@ func makeHttpCreateTodoEndpoint(s TodoService) endpoint.Endpoint {
 	}
 }
 
-func makeHttpDeleteTodoEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpDeleteTodoEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(deleteTodoRequest)
 		t, err := s.DeleteTodo(ctx, req.TodoId)
@@ -62,7 +62,7 @@ func makeHttpDeleteTodoEndpoint(s TodoService) endpoint.Endpoint {
 	}
 }
 
-func makeHttpUpdateTodoEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpUpdateTodoEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(updateTodoRequest)
 		t, err := s.UpdateTodo(ctx, req.Todo)
@@ -70,7 +70,7 @@ func makeHttpUpdateTodoEndpoint(s TodoService) endpoint.Endpoint {
 	}
 }
 
-func makeHttpGetTodoByIdEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpGetTodoByIdEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(getTodoByIdRequest)
 		t, err := s.GetTodoById(ctx, req.TodoId)
@@ -78,7 +78,7 @@ func makeHttpGetTodoByIdEndpoint(s TodoService) endpoint.Endpoint {
 	}
 }
 
-func makeHttpListTodosByUserIdEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpListTodosByUserIdEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(listTodosByUserIdRequest)
 		t, err := s.ListTodosByUserId(ctx, req.UserId)
