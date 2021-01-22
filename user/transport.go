@@ -88,8 +88,7 @@ func listUsersResponseEncoder(ctx context.Context, w http.ResponseWriter, resp i
 	return nil
 }
 
-func MakeHandler(s Service, logger log.Logger) http.Handler {
-	r := mux.NewRouter()
+func MakeHandler(s Service, logger log.Logger, r *mux.Router) {
 	createUserHandler := httptransport.NewServer(
 		makeHttpCreateUserEndpoint(s),
 		createUserRequestDecoder,
@@ -124,6 +123,4 @@ func MakeHandler(s Service, logger log.Logger) http.Handler {
 		listUsersResponseEncoder,
 	)
 	r.Handle("/user", listUserHandler).Methods("GET")
-
-	return r
 }

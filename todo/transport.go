@@ -62,8 +62,7 @@ func makeResponseDecoder() func(ctx context.Context, w http.ResponseWriter, resp
 	}
 }
 
-func MakeHandler(s Service, logger log.Logger) http.Handler {
-	r := mux.NewRouter()
+func MakeHandler(s Service, logger log.Logger, r *mux.Router) {
 	createTodoHandler := httptransport.NewServer(
 		makeHttpCreateTodoEndpoint(s),
 		createTodoRequestEncoder,
@@ -98,6 +97,4 @@ func MakeHandler(s Service, logger log.Logger) http.Handler {
 		makeResponseDecoder(),
 	)
 	r.Handle("/todo/list/{userId}", getTodoByUserIdTodoHandler).Methods("GET")
-
-	return r
 }
