@@ -5,83 +5,83 @@ import (
 	"github.com/go-kit/kit/endpoint"
 )
 
-type todoCreateTodoRequest struct {
+type createTodoRequest struct {
 	Text,
 	UserId string
 }
-type todoCreateTodoResponse struct {
+type createTodoResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
 	Err  error `json:"error,omitempty"`
 }
 
-type todoDeleteTodoRequest struct {
+type deleteTodoRequest struct {
 	TodoId string
 }
-type todoDeleteTodoResponse struct {
+type deleteTodoResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
 	Err  error `json:"error,omitempty"`
 }
 
-type todoUpdateTodoRequest struct {
+type updateTodoRequest struct {
 	Todo Todo
 }
-type todoUpdateTodoResponse struct {
+type updateTodoResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
 	Err  error `json:"error,omitempty"`
 }
 
-type todoGetTodoByIdRequest struct {
+type getTodoByIdRequest struct {
 	TodoId string
 }
-type todoGetTodoByIdResponse struct {
+type getTodoByIdResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
 	Err  error `json:"error,omitempty"`
 }
 
-type todoListTodosByUserIdRequest struct {
+type listTodosByUserIdRequest struct {
 	UserId string
 }
-type todoListTodosByUserIdResponse struct {
+type listTodosByUserIdResponse struct {
 	Todo *[]Todo `json:"todo,omitempty"`
 	Err  error   `json:"error,omitempty"`
 }
 
-func makeHttpTodoCreateEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpCreateTodoEndpoint(s TodoService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(todoCreateTodoRequest)
+		req := request.(createTodoRequest)
 		t, err := s.CreateTodo(ctx, req.Text, req.UserId)
-		return todoCreateTodoResponse{&t, err}, nil
+		return createTodoResponse{&t, err}, nil
 	}
 }
 
-func makeHttpTodoDeleteEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpDeleteTodoEndpoint(s TodoService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(todoDeleteTodoRequest)
+		req := request.(deleteTodoRequest)
 		t, err := s.DeleteTodo(ctx, req.TodoId)
-		return todoDeleteTodoResponse{&t, err}, nil
+		return deleteTodoResponse{&t, err}, nil
 	}
 }
 
-func makeHttpTodoUpdateEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpUpdateTodoEndpoint(s TodoService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(todoUpdateTodoRequest)
+		req := request.(updateTodoRequest)
 		t, err := s.UpdateTodo(ctx, req.Todo)
-		return todoUpdateTodoResponse{&t, err}, nil
+		return updateTodoResponse{&t, err}, nil
 	}
 }
 
-func makeHttpTodoGetTodoByIdEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpGetTodoByIdEndpoint(s TodoService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(todoGetTodoByIdRequest)
+		req := request.(getTodoByIdRequest)
 		t, err := s.GetTodoById(ctx, req.TodoId)
-		return todoGetTodoByIdResponse{&t, err}, nil
+		return getTodoByIdResponse{&t, err}, nil
 	}
 }
 
-func makeHttpTodoListTodosByUserIdEndpoint(s TodoService) endpoint.Endpoint {
+func makeHttpListTodosByUserIdEndpoint(s TodoService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(todoListTodosByUserIdRequest)
+		req := request.(listTodosByUserIdRequest)
 		t, err := s.ListTodosByUserId(ctx, req.UserId)
-		return todoListTodosByUserIdResponse{&t, err}, nil
+		return listTodosByUserIdResponse{&t, err}, nil
 	}
 }
