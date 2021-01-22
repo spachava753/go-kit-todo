@@ -39,8 +39,8 @@ type getUserByIdResponse struct {
 
 type listUsersRequest struct{}
 type listUsersResponse struct {
-	User *[]User `json:"users,omitempty"`
-	Err  error   `json:"error,omitempty"`
+	Users []User `json:"users,omitempty"`
+	Err   error  `json:"error,omitempty"`
 }
 
 func makeHttpCreateUserEndpoint(s Service) endpoint.Endpoint {
@@ -78,6 +78,6 @@ func makeHttpGetUserByIdEndpoint(s Service) endpoint.Endpoint {
 func makeHttpListUsersEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		user, err := s.ListUsers(ctx)
-		return listUsersResponse{&user, err}, nil
+		return listUsersResponse{user, err}, nil
 	}
 }

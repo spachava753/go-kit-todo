@@ -2,49 +2,89 @@ package user
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"github.com/go-kit/kit/log"
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
 	"net/http"
 )
 
-func createUserRequestDecoder(context.Context, *http.Request) (request interface{}, err error) {
-	return nil, err
+func createUserRequestDecoder(ctx context.Context, r *http.Request) (interface{}, error) {
+	var req createUserRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		return createUserRequest{}, err
+	}
+	return req, nil
 }
 
-func createUserResponseEncoder(context.Context, http.ResponseWriter, interface{}) error {
+func createUserResponseEncoder(ctx context.Context, w http.ResponseWriter, resp interface{}) error {
+	r := resp.(createUserResponse)
+	if err := json.NewEncoder(w).Encode(&r); err != nil {
+		return err
+	}
 	return nil
 }
 
-func deleteUserRequestDecoder(context.Context, *http.Request) (request interface{}, err error) {
-	return nil, err
+func deleteUserRequestDecoder(ctx context.Context, r *http.Request) (interface{}, error) {
+	vars := mux.Vars(r)
+	userId, ok := vars["id"]
+	if !ok {
+		return deleteUserRequest{}, fmt.Errorf("user id is not provided in path")
+	}
+	return deleteUserRequest{userId}, nil
 }
 
-func deleteUserResponseEncoder(context.Context, http.ResponseWriter, interface{}) error {
+func deleteUserResponseEncoder(ctx context.Context, w http.ResponseWriter, resp interface{}) error {
+	r := resp.(deleteUserResponse)
+	if err := json.NewEncoder(w).Encode(&r); err != nil {
+		return err
+	}
 	return nil
 }
 
-func updateUserRequestDecoder(context.Context, *http.Request) (request interface{}, err error) {
-	return nil, err
+func updateUserRequestDecoder(ctx context.Context, r *http.Request) (interface{}, error) {
+	var user User
+	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+		return updateUserRequest{}, err
+	}
+	return updateUserRequest{user}, nil
 }
 
-func updateUserResponseEncoder(context.Context, http.ResponseWriter, interface{}) error {
+func updateUserResponseEncoder(ctx context.Context, w http.ResponseWriter, resp interface{}) error {
+	r := resp.(updateUserResponse)
+	if err := json.NewEncoder(w).Encode(&r); err != nil {
+		return err
+	}
 	return nil
 }
 
-func getUserByIdRequestDecoder(context.Context, *http.Request) (request interface{}, err error) {
-	return nil, err
+func getUserByIdRequestDecoder(ctx context.Context, r *http.Request) (request interface{}, err error) {
+	vars := mux.Vars(r)
+	userId, ok := vars["id"]
+	if !ok {
+		return getUserByIdRequest{}, fmt.Errorf("user id is not provided in path")
+	}
+	return getUserByIdRequest{userId}, nil
 }
 
-func getUserByIdResponseEncoder(context.Context, http.ResponseWriter, interface{}) error {
+func getUserByIdResponseEncoder(ctx context.Context, w http.ResponseWriter, resp interface{}) error {
+	r := resp.(getUserByIdResponse)
+	if err := json.NewEncoder(w).Encode(&r); err != nil {
+		return err
+	}
 	return nil
 }
 
 func listUsersRequestDecoder(context.Context, *http.Request) (request interface{}, err error) {
-	return nil, err
+	return listUsersRequest{}, err
 }
 
-func listUsersResponseEncoder(context.Context, http.ResponseWriter, interface{}) error {
+func listUsersResponseEncoder(ctx context.Context, w http.ResponseWriter, resp interface{}) error {
+	r := resp.(listUsersResponse)
+	if err := json.NewEncoder(w).Encode(&r); err != nil {
+		return err
+	}
 	return nil
 }
 
