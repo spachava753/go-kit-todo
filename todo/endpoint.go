@@ -6,8 +6,8 @@ import (
 )
 
 type createTodoRequest struct {
-	Text,
-	UserId string
+	Text   string `json:"text"`
+	UserId string `json:"user_id"`
 }
 type createTodoResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
@@ -15,7 +15,7 @@ type createTodoResponse struct {
 }
 
 type deleteTodoRequest struct {
-	TodoId string
+	TodoId string `json:"todo_id"`
 }
 type deleteTodoResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
@@ -39,7 +39,7 @@ type getTodoByIdResponse struct {
 }
 
 type getTodosByUserIdRequest struct {
-	UserId string
+	UserId string `json:"user_id"`
 }
 type getTodosByUserIdResponse struct {
 	Todo *[]Todo `json:"todos,omitempty"`
