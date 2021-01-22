@@ -42,7 +42,7 @@ type listTodosByUserIdRequest struct {
 	UserId string
 }
 type listTodosByUserIdResponse struct {
-	Todo *[]Todo `json:"todo,omitempty"`
+	Todo *[]Todo `json:"todos,omitempty"`
 	Err  error   `json:"error,omitempty"`
 }
 
