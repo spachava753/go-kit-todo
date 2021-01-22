@@ -1,7 +1,8 @@
-package services
+package todo
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/oklog/ulid/v2"
 	"sync"
@@ -38,6 +39,9 @@ func (s *inMemTodoService) UpdateTodo(ctx context.Context, todo Todo) (Todo, err
 }
 
 func (s *inMemTodoService) CreateTodo(ctx context.Context, text string, userId string) (Todo, error) {
+	if text == "" {
+		return Todo{}, errors.New("todo text cannot be empty")
+	}
 	id := ulid.MustNew(ulid.Timestamp(s.time), s.entropy).String()
 	todo := Todo{id, text, false, userId}
 	s.todos.Store(id, todo)
