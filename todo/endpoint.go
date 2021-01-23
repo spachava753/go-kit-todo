@@ -78,7 +78,7 @@ func MakeGetTodoByIdEndpoint(s Service) endpoint.Endpoint {
 	}
 }
 
-func MakeListTodosByUserIdEndpoint(s Service) endpoint.Endpoint {
+func MakeGetTodosByUserIdEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(GetTodosByUserIdRequest)
 		t, err := s.ListTodosByUserId(ctx, req.UserId)

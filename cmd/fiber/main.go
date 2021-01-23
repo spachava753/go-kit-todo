@@ -2,14 +2,13 @@ package main
 
 import (
 	"github.com/go-kit/kit/log"
-	"github.com/gorilla/mux"
+	"github.com/gofiber/fiber/v2"
 	"github.com/oklog/ulid/v2"
 	"github.com/spachava/go-kit-todo/todo"
-	todotransport "github.com/spachava/go-kit-todo/todo/transport/gorilla"
+	todotransport "github.com/spachava/go-kit-todo/todo/transport/fiber"
 	"github.com/spachava/go-kit-todo/user"
-	usertransport "github.com/spachava/go-kit-todo/user/transport/gorilla"
+	usertransport "github.com/spachava/go-kit-todo/user/transport/fiber"
 	"math/rand"
-	"net/http"
 	"os"
 	"time"
 )
@@ -30,8 +29,10 @@ func main() {
 	todoService = todo.NewMemTodoService(todoEntropy, t)
 	todoService = todo.NewBasicLoggingService(log.With(logger, "component", "todo"), todoService)
 
-	r := mux.NewRouter()
-	usertransport.MakeHandler(userService, r)
-	todotransport.MakeHandler(todoService, r)
-	http.ListenAndServe(":8080", r)
+	app := fiber.New()
+
+	todotransport.MakeRoutes(todoService, app)
+	usertransport.MakeRoutes(userService, app)
+
+	app.Listen(":8080")
 }

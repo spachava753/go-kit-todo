@@ -92,7 +92,7 @@ func MakeHandler(s todo.Service, r *mux.Router) {
 	r.Handle("/todo/{id}", getTodoByIdHandler).Methods("GET")
 
 	getTodoByUserIdTodoHandler := httptransport.NewServer(
-		todo.MakeListTodosByUserIdEndpoint(s),
+		todo.MakeGetTodosByUserIdEndpoint(s),
 		getTodosByUserIdRequestEncoder,
 		makeResponseDecoder(),
 	)
