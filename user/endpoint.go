@@ -5,79 +5,79 @@ import (
 	"github.com/go-kit/kit/endpoint"
 )
 
-type createUserRequest struct {
+type CreateUserRequest struct {
 	Name string
 }
-type createUserResponse struct {
+type CreateUserResponse struct {
 	User *User `json:"user,omitempty"`
 	Err  error `json:"error,omitempty"`
 }
 
-type deleteUserRequest struct {
+type DeleteUserRequest struct {
 	UserId string
 }
-type deleteUserResponse struct {
+type DeleteUserResponse struct {
 	User *User `json:"user,omitempty"`
 	Err  error `json:"error,omitempty"`
 }
 
-type updateUserRequest struct {
+type UpdateUserRequest struct {
 	User User
 }
-type updateUserResponse struct {
+type UpdateUserResponse struct {
 	User *User `json:"user,omitempty"`
 	Err  error `json:"error,omitempty"`
 }
 
-type getUserByIdRequest struct {
+type GetUserByIdRequest struct {
 	UserId string
 }
-type getUserByIdResponse struct {
+type GetUserByIdResponse struct {
 	User *User `json:"user,omitempty"`
 	Err  error `json:"error,omitempty"`
 }
 
-type listUsersRequest struct{}
-type listUsersResponse struct {
+type ListUsersRequest struct{}
+type ListUsersResponse struct {
 	Users []User `json:"users,omitempty"`
 	Err   error  `json:"error,omitempty"`
 }
 
-func makeHttpCreateUserEndpoint(s Service) endpoint.Endpoint {
+func MakeCreateUserEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(createUserRequest)
+		req := request.(CreateUserRequest)
 		user, err := s.CreateUser(ctx, req.Name)
-		return createUserResponse{&user, err}, nil
+		return CreateUserResponse{&user, err}, nil
 	}
 }
 
-func makeHttpDeleteUserEndpoint(s Service) endpoint.Endpoint {
+func MakeDeleteUserEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(deleteUserRequest)
+		req := request.(DeleteUserRequest)
 		user, err := s.DeleteUser(ctx, req.UserId)
-		return deleteUserResponse{&user, err}, nil
+		return DeleteUserResponse{&user, err}, nil
 	}
 }
 
-func makeHttpUpdateUserEndpoint(s Service) endpoint.Endpoint {
+func MakeUpdateUserEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(updateUserRequest)
+		req := request.(UpdateUserRequest)
 		user, err := s.UpdateUser(ctx, req.User)
-		return updateUserResponse{&user, err}, nil
+		return UpdateUserResponse{&user, err}, nil
 	}
 }
 
-func makeHttpGetUserByIdEndpoint(s Service) endpoint.Endpoint {
+func MakeGetUserByIdEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(getUserByIdRequest)
+		req := request.(GetUserByIdRequest)
 		user, err := s.GetUserById(ctx, req.UserId)
-		return getUserByIdResponse{&user, err}, nil
+		return GetUserByIdResponse{&user, err}, nil
 	}
 }
 
-func makeHttpListUsersEndpoint(s Service) endpoint.Endpoint {
+func MakeListUsersEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		user, err := s.ListUsers(ctx)
-		return listUsersResponse{user, err}, nil
+		return ListUsersResponse{user, err}, nil
 	}
 }

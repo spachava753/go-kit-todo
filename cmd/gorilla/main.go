@@ -6,7 +6,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/oklog/ulid/v2"
 	"github.com/spachava/go-kit-todo/todo"
+	todotransport "github.com/spachava/go-kit-todo/todo/transport/gorilla"
 	"github.com/spachava/go-kit-todo/user"
+	usertransport "github.com/spachava/go-kit-todo/user/transport/gorilla"
 	"math/rand"
 	"net/http"
 	"os"
@@ -32,7 +34,7 @@ func main() {
 	todoService = todo.NewBasicLoggingService(log.With(logger, "component", "todo"), todoService)
 
 	r := mux.NewRouter()
-	user.MakeHandler(userService, logger, r)
-	todo.MakeHandler(todoService, logger, r)
+	usertransport.MakeHandler(userService, r)
+	todotransport.MakeHandler(todoService, r)
 	http.ListenAndServe(":8080", r)
 }
