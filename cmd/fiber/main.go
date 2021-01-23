@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/go-kit/kit/log"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -36,5 +37,7 @@ func main() {
 	todotransport.MakeRoutes(todoService, app)
 	usertransport.MakeRoutes(userService, app)
 
-	app.Listen(":8080")
+	if err := app.Listen(":8080"); err != nil {
+		fmt.Printf("app exited with err: %s", err)
+	}
 }

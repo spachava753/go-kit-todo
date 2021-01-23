@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/go-kit/kit/log"
 	"github.com/gorilla/mux"
 	"github.com/oklog/ulid/v2"
@@ -33,5 +34,7 @@ func main() {
 	r := mux.NewRouter()
 	usertransport.MakeHandler(userService, r)
 	todotransport.MakeHandler(todoService, r)
-	http.ListenAndServe(":8080", r)
+	if err := http.ListenAndServe(":8080", r); err != nil {
+		fmt.Printf("app exited with err: %s", err)
+	}
 }
