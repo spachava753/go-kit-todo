@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// MakeFiberHandler creates a fiber handler
 func MakeFiberHandler(
 	endpoint endpoint.Endpoint,
 	decode func(ctx *fiber.Ctx) (interface{}, error),
