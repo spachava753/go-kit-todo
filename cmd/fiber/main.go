@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/go-kit/kit/log"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/oklog/ulid/v2"
 	"github.com/spachava/go-kit-todo/todo"
 	todotransport "github.com/spachava/go-kit-todo/todo/transport/fiber"
@@ -31,6 +32,7 @@ func main() {
 
 	app := fiber.New()
 
+	app.Use(recover.New())
 	todotransport.MakeRoutes(todoService, app)
 	usertransport.MakeRoutes(userService, app)
 
