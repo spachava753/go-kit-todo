@@ -27,7 +27,7 @@ type inMemUserService struct {
 	users   sync.Map
 }
 
-func (s *inMemUserService) UpdateUser(ctx context.Context, user User) (User, error) {
+func (s *inMemUserService) UpdateUser(_ context.Context, user User) (User, error) {
 	if _, ok := s.users.Load(user.Id); !ok {
 		return User{}, fmt.Errorf("user with id %s does not exist", user.Id)
 	}
@@ -35,28 +35,28 @@ func (s *inMemUserService) UpdateUser(ctx context.Context, user User) (User, err
 	return user, nil
 }
 
-func (s *inMemUserService) CreateUser(ctx context.Context, name string) (User, error) {
+func (s *inMemUserService) CreateUser(_ context.Context, name string) (User, error) {
 	id := ulid.MustNew(ulid.Timestamp(s.time), s.entropy).String()
 	user := User{id, name}
 	s.users.Store(id, user)
 	return user, nil
 }
 
-func (s *inMemUserService) DeleteUser(ctx context.Context, userId string) (User, error) {
+func (s *inMemUserService) DeleteUser(_ context.Context, userId string) (User, error) {
 	if v, ok := s.users.LoadAndDelete(userId); ok {
 		return v.(User), nil
 	}
 	return User{}, fmt.Errorf("could not delete user with id %s", userId)
 }
 
-func (s *inMemUserService) GetUserById(ctx context.Context, userId string) (User, error) {
+func (s *inMemUserService) GetUserById(_ context.Context, userId string) (User, error) {
 	if v, ok := s.users.Load(userId); ok {
 		return v.(User), nil
 	}
 	return User{}, fmt.Errorf("could not find user with id %s", userId)
 }
 
-func (s *inMemUserService) ListUsers(ctx context.Context) ([]User, error) {
+func (s *inMemUserService) ListUsers(_ context.Context) ([]User, error) {
 	var userList []User
 	s.users.Range(func(_, value interface{}) bool {
 		userList = append(userList, value.(User))

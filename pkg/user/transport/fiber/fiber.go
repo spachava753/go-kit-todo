@@ -30,7 +30,7 @@ func deleteUserRequestDecoder(ctx *fiber.Ctx) (interface{}, error) {
 	if userId == "" {
 		return user.DeleteUserRequest{}, fmt.Errorf("user id is not provided in path")
 	}
-	return user.DeleteUserRequest{userId}, nil
+	return user.DeleteUserRequest{UserId: userId}, nil
 }
 
 func deleteUserResponseEncoder(ctx *fiber.Ctx, resp interface{}) error {
@@ -46,7 +46,7 @@ func updateUserRequestDecoder(ctx *fiber.Ctx) (interface{}, error) {
 	if err := json.Unmarshal(ctx.Body(), &u); err != nil {
 		return user.UpdateUserRequest{}, err
 	}
-	return user.UpdateUserRequest{u}, nil
+	return user.UpdateUserRequest{User: u}, nil
 }
 
 func updateUserResponseEncoder(ctx *fiber.Ctx, resp interface{}) error {
@@ -62,7 +62,7 @@ func getUserByIdRequestDecoder(ctx *fiber.Ctx) (request interface{}, err error) 
 	if userId == "" {
 		return user.GetUserByIdRequest{}, fmt.Errorf("user id is not provided in path")
 	}
-	return user.GetUserByIdRequest{userId}, nil
+	return user.GetUserByIdRequest{UserId: userId}, nil
 }
 
 func getUserByIdResponseEncoder(ctx *fiber.Ctx, resp interface{}) error {
@@ -73,7 +73,7 @@ func getUserByIdResponseEncoder(ctx *fiber.Ctx, resp interface{}) error {
 	return nil
 }
 
-func listUsersRequestDecoder(ctx *fiber.Ctx) (request interface{}, err error) {
+func listUsersRequestDecoder(_ *fiber.Ctx) (request interface{}, err error) {
 	return user.ListUsersRequest{}, err
 }
 

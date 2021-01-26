@@ -30,7 +30,7 @@ type inMemTodoService struct {
 	todos   sync.Map
 }
 
-func (s *inMemTodoService) UpdateTodo(ctx context.Context, todo Todo) (Todo, error) {
+func (s *inMemTodoService) UpdateTodo(_ context.Context, todo Todo) (Todo, error) {
 	if _, ok := s.todos.Load(todo.Id); !ok {
 		return Todo{}, fmt.Errorf("user with id %s does not exist", todo.Id)
 	}
@@ -38,7 +38,7 @@ func (s *inMemTodoService) UpdateTodo(ctx context.Context, todo Todo) (Todo, err
 	return todo, nil
 }
 
-func (s *inMemTodoService) CreateTodo(ctx context.Context, text string, userId string) (Todo, error) {
+func (s *inMemTodoService) CreateTodo(_ context.Context, text string, userId string) (Todo, error) {
 	if text == "" {
 		return Todo{}, errors.New("todo text cannot be empty")
 	}
@@ -48,21 +48,21 @@ func (s *inMemTodoService) CreateTodo(ctx context.Context, text string, userId s
 	return todo, nil
 }
 
-func (s *inMemTodoService) DeleteTodo(ctx context.Context, todoId string) (Todo, error) {
+func (s *inMemTodoService) DeleteTodo(_ context.Context, todoId string) (Todo, error) {
 	if v, ok := s.todos.LoadAndDelete(todoId); ok {
 		return v.(Todo), nil
 	}
 	return Todo{}, fmt.Errorf("could not todo delete with id %s", todoId)
 }
 
-func (s *inMemTodoService) GetTodoById(ctx context.Context, todoId string) (Todo, error) {
+func (s *inMemTodoService) GetTodoById(_ context.Context, todoId string) (Todo, error) {
 	if v, ok := s.todos.Load(todoId); ok {
 		return v.(Todo), nil
 	}
 	return Todo{}, fmt.Errorf("could not find todo with id %s", todoId)
 }
 
-func (s *inMemTodoService) ListTodosByUserId(ctx context.Context, userId string) ([]Todo, error) {
+func (s *inMemTodoService) ListTodosByUserId(_ context.Context, userId string) ([]Todo, error) {
 	var todoList []Todo
 	s.todos.Range(func(_, value interface{}) bool {
 		todo := value.(Todo)
