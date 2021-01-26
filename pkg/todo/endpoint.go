@@ -11,7 +11,6 @@ type CreateTodoRequest struct {
 }
 type CreateTodoResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
-	Err  error `json:"error,omitempty"`
 }
 
 type DeleteTodoRequest struct {
@@ -19,7 +18,6 @@ type DeleteTodoRequest struct {
 }
 type DeleteTodoResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
-	Err  error `json:"error,omitempty"`
 }
 
 type UpdateTodoRequest struct {
@@ -27,7 +25,6 @@ type UpdateTodoRequest struct {
 }
 type UpdateTodoResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
-	Err  error `json:"error,omitempty"`
 }
 
 type GetTodoByIdRequest struct {
@@ -35,7 +32,6 @@ type GetTodoByIdRequest struct {
 }
 type GetTodoByIdResponse struct {
 	Todo *Todo `json:"todo,omitempty"`
-	Err  error `json:"error,omitempty"`
 }
 
 type GetTodosByUserIdRequest struct {
@@ -43,14 +39,13 @@ type GetTodosByUserIdRequest struct {
 }
 type GetTodosByUserIdResponse struct {
 	Todo *[]Todo `json:"todos,omitempty"`
-	Err  error   `json:"error,omitempty"`
 }
 
 func MakeCreateTodoEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(CreateTodoRequest)
 		t, err := s.CreateTodo(ctx, req.Text, req.UserId)
-		return CreateTodoResponse{&t, err}, nil
+		return CreateTodoResponse{&t}, err
 	}
 }
 
@@ -58,7 +53,7 @@ func MakeDeleteTodoEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(DeleteTodoRequest)
 		t, err := s.DeleteTodo(ctx, req.TodoId)
-		return DeleteTodoResponse{&t, err}, nil
+		return DeleteTodoResponse{&t}, err
 	}
 }
 
@@ -66,7 +61,7 @@ func MakeUpdateTodoEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(UpdateTodoRequest)
 		t, err := s.UpdateTodo(ctx, req.Todo)
-		return UpdateTodoResponse{&t, err}, nil
+		return UpdateTodoResponse{&t}, err
 	}
 }
 
@@ -74,7 +69,7 @@ func MakeGetTodoByIdEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(GetTodoByIdRequest)
 		t, err := s.GetTodoById(ctx, req.TodoId)
-		return GetTodoByIdResponse{&t, err}, nil
+		return GetTodoByIdResponse{&t}, err
 	}
 }
 
@@ -82,6 +77,6 @@ func MakeGetTodosByUserIdEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(GetTodosByUserIdRequest)
 		t, err := s.ListTodosByUserId(ctx, req.UserId)
-		return GetTodosByUserIdResponse{&t, err}, nil
+		return GetTodosByUserIdResponse{&t}, err
 	}
 }

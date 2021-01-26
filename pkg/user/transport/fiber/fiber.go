@@ -90,6 +90,7 @@ func MakeRoutes(s user.Service, app *fiber.App) {
 		user.MakeCreateUserEndpoint(s),
 		createUserRequestDecoder,
 		createUserResponseEncoder,
+		nil,
 	)
 	app.Put("/user", createUserHandler)
 
@@ -97,6 +98,7 @@ func MakeRoutes(s user.Service, app *fiber.App) {
 		user.MakeDeleteUserEndpoint(s),
 		deleteUserRequestDecoder,
 		deleteUserResponseEncoder,
+		nil,
 	)
 	app.Delete("/user/:id", deleteUserHandler)
 
@@ -104,6 +106,7 @@ func MakeRoutes(s user.Service, app *fiber.App) {
 		user.MakeUpdateUserEndpoint(s),
 		updateUserRequestDecoder,
 		updateUserResponseEncoder,
+		nil,
 	)
 	app.Post("/user", updateUserHandler)
 
@@ -111,6 +114,7 @@ func MakeRoutes(s user.Service, app *fiber.App) {
 		user.MakeGetUserByIdEndpoint(s),
 		getUserByIdRequestDecoder,
 		getUserByIdResponseEncoder,
+		nil,
 	)
 	app.Get("/user/:id", getUserHandler)
 
@@ -118,6 +122,7 @@ func MakeRoutes(s user.Service, app *fiber.App) {
 		user.MakeListUsersEndpoint(s),
 		listUsersRequestDecoder,
 		listUsersResponseEncoder,
+		nil,
 	)
 	app.Get("/user", listUserHandler)
 }

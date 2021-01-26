@@ -62,6 +62,7 @@ func MakeRoutes(s todo.Service, app *fiber.App) {
 		todo.MakeCreateTodoEndpoint(s),
 		createTodoRequestEncoder,
 		makeResponseDecoder(),
+		nil,
 	)
 	app.Put("/todo", createTodoHandler)
 
@@ -69,6 +70,7 @@ func MakeRoutes(s todo.Service, app *fiber.App) {
 		todo.MakeDeleteTodoEndpoint(s),
 		deleteTodoRequestEncoder,
 		makeResponseDecoder(),
+		nil,
 	)
 	app.Delete("/todo/:id", deleteTodoHandler)
 
@@ -76,6 +78,7 @@ func MakeRoutes(s todo.Service, app *fiber.App) {
 		todo.MakeUpdateTodoEndpoint(s),
 		updateTodoRequestEncoder,
 		makeResponseDecoder(),
+		nil,
 	)
 	app.Post("/todo", updateTodoHandler)
 
@@ -83,6 +86,7 @@ func MakeRoutes(s todo.Service, app *fiber.App) {
 		todo.MakeGetTodoByIdEndpoint(s),
 		getTodoByIdRequestEncoder,
 		makeResponseDecoder(),
+		nil,
 	)
 	app.Get("/todo/:id", getTodoByIdHandler)
 
@@ -90,6 +94,7 @@ func MakeRoutes(s todo.Service, app *fiber.App) {
 		todo.MakeGetTodosByUserIdEndpoint(s),
 		getTodosByUserIdRequestEncoder,
 		makeResponseDecoder(),
+		nil,
 	)
 	app.Get("/todo/list/:userId", getTodoByUserIdTodoHandler)
 }
