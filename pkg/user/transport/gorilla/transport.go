@@ -6,7 +6,7 @@ import (
 	"fmt"
 	kittransport "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
-	"github.com/spachava/go-kit-todo/user"
+	"github.com/spachava/go-kit-todo/pkg/user"
 	"net/http"
 )
 

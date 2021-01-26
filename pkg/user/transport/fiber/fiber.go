@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/spachava/go-kit-todo/transport"
-	"github.com/spachava/go-kit-todo/user"
+	"github.com/spachava/go-kit-todo/pkg/transport"
+	"github.com/spachava/go-kit-todo/pkg/user"
 )
 
 func createUserRequestDecoder(ctx *fiber.Ctx) (interface{}, error) {

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/gofiber/fiber/v2"
-	"github.com/spachava/go-kit-todo/todo"
-	"github.com/spachava/go-kit-todo/transport"
+	"github.com/spachava/go-kit-todo/pkg/todo"
+	"github.com/spachava/go-kit-todo/pkg/transport"
 )
 
 func createTodoRequestEncoder(ctx *fiber.Ctx) (interface{}, error) {

@@ -6,7 +6,7 @@ import (
 	"errors"
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
-	"github.com/spachava/go-kit-todo/todo"
+	"github.com/spachava/go-kit-todo/pkg/todo"
 	"net/http"
 )
 

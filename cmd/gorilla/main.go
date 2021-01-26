@@ -4,37 +4,27 @@ import (
 	"fmt"
 	"github.com/go-kit/kit/log"
 	"github.com/gorilla/mux"
-	"github.com/oklog/ulid/v2"
-	"github.com/spachava/go-kit-todo/todo"
-	todotransport "github.com/spachava/go-kit-todo/todo/transport/gorilla"
-	"github.com/spachava/go-kit-todo/user"
-	usertransport "github.com/spachava/go-kit-todo/user/transport/gorilla"
-	"math/rand"
+	"github.com/spachava/go-kit-todo/cmd"
+	todotransport "github.com/spachava/go-kit-todo/pkg/todo/transport/gorilla"
+	usertransport "github.com/spachava/go-kit-todo/pkg/user/transport/gorilla"
 	"net/http"
 	"os"
-	"time"
 )
 
 func main() {
 
+	port := os.Getenv("TODO_PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	logger := log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
-	logger = log.With(logger, "timestamp", log.DefaultTimestampUTC)
-
-	t := time.Unix(1000000, 0)
-	userEntropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
-	var userService user.Service
-	userService = user.NewMemUserService(userEntropy, t)
-	userService = user.NewBasicLoggingService(log.With(logger, "component", "user"), userService)
-
-	todoEntropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
-	var todoService todo.Service
-	todoService = todo.NewMemTodoService(todoEntropy, t)
-	todoService = todo.NewBasicLoggingService(log.With(logger, "component", "todo"), todoService)
+	todoService, userService := cmd.InitApp(logger)
 
 	r := mux.NewRouter()
 	usertransport.MakeHandler(userService, r)
 	todotransport.MakeHandler(todoService, r)
-	if err := http.ListenAndServe(":8080", r); err != nil {
+	if err := http.ListenAndServe(":"+port, r); err != nil {
 		fmt.Printf("app exited with err: %s", err)
 	}
 }
