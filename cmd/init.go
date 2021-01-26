@@ -21,6 +21,7 @@ func InitApp(logger log.Logger) (todo.Service, user.Service) {
 	todoEntropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
 	var todoService todo.Service
 	todoService = todo.NewMemTodoService(todoEntropy, t)
+	todoService = todo.NewUserValidationService(todoService, userService)
 	todoService = todo.NewBasicLoggingService(log.With(logger, "component", "todo"), todoService)
 
 	return todoService, userService
